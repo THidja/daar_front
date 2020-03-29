@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>daar search engine</title>
+        <link rel="icon" href="img/icon.ico" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </h:head>
+    <h:body>
+    	<p:outputPanel styleClass="col-lg-4 offset-lg-4 col-md-6 offset-md-3 header">
+    		<h3><img src="img/sorbonne.png" width="250px" height="100px" /><br /> Search Engine</h3>
+	    	<!-- simple search panel -->
+		    	<p:panel styleClass="ss-panel" visible="true" widgetVar="ss_panel" id="ss_panel">
+		    		<h:form id="ss_form">
+			    		<p:inputText id="word" 
+			    								 placeholder="keyword" 
+			    								 required="true"
+			    								 requiredMessage="keyword: value is required"
+			    								 validatorMessage="keyword: min length must be 3"
+			    								 value="#{ssForm.word}">
+			    			<f:validateLength minimum="3" />
+			    		</p:inputText>
+			    		<br /><br />
+			    		<p:message for="word" id="ss_errors" />
+			    		<div class="btns">
+  			    			<p:commandButton value="search"
+  			    											 style="margin-right: 10px;"
+																	 process="@all"
+									 								 update="word, ss_errors"
+									 								 action="#{ssForm.submit}" />
+			    				<p:commandButton value="advanced search" onclick="PF('ss_panel').slideUp(); PF('as_panel').slideDown();" >
+			    					<p:ajax process="@none" update="ss_form" resetValues="true" />
+			    				</p:commandButton>
+			    		</div>
+		    		</h:form>
+		    	</p:panel>
+		    	<!-- advanced search panel -->
+		    	<p:panel styleClass="as-panel" 
+		    					 collapsed="true"
+		    					 widgetVar="as_panel"
+		    					 id="as_panel">
+		    		<h:form id="as_form">
+			    		<!-- pattern -->
+			    		<div class="as-element">
+			  				<p:outputLabel for="pattern" value="Pattern" />
+			  				<p:inputText id="pattern" value="#{asForm.pattern}" />
+			  			</div>
+			  			<!-- title -->
+			  			<div class="as-element">
+			  				<p:outputLabel for="title" value="Title" />
+			  				<p:inputText id="title" value="#{asForm.title}" />
+			  			</div>
+			  			<!-- subject -->
+			  			<div class="as-element">
+			  				<p:outputLabel for="subject" value="Subject" />
+			  				<p:inputText id="subject" value="#{asForm.subject}"/>
+			  			</div>
+			  			<!-- language -->
+			  			<div class="as-element">
+			  				<p:outputLabel for="language" value="Language" />
+			  				<p:selectOneMenu id="language" value="#{asForm.language}" style="width: 100%">
+			  					<f:selectItems value="${asForm.languages}" />
+			  				</p:selectOneMenu>
+			  			</div>
+			  			<!-- author -->
+			  			<div class="as-element">
+			  				<p:outputLabel for="author" value="Author" />
+			  				<p:inputText id="author" value="#{asForm.author}" />
+			  			</div>
+			  			<br /><br />
+			  			<!-- actions -->
+			  			<div class="btns">
+			  				<p:commandButton value="Search"
+			  												 style="margin-right: 10px;"
+			  												 process="as_form"
+			  												 update="as_form"
+			  												 action="#{asForm.submit}"/>
+			  				<p:commandButton value="simple search" onclick="PF('as_panel').slideUp(); PF('ss_panel').slideDown();" >
+			  					<p:ajax process="@none" update="as_form" resetValues="true" />
+			  				</p:commandButton>
+		  				</div>
+		  			</h:form>
+		  		</p:panel>
+	  	</p:outputPanel>
+    </h:body>
+</html>

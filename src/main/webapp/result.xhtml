@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>daar search engine</title>
+        <link rel="icon" href="img/icon.ico" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </h:head>
+    <h:body>
+    	<h:form id="form" style="margin:15px;">
+		    <p:dataGrid var="book" value="${engine.books}"
+		    						columns="3" 
+		    						layout="grid"
+		    						rows="9" 
+		    						paginator="true" 
+		    						id="books"
+		       				  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		        				rowsPerPageTemplate="6,9,12,15">
+         
+		        <f:facet name="header">
+		            <p:linkButton outcome="index.xhtml" value="make new search" />
+		        </f:facet>
+ 
+		        <p:panel header="#{book.title}" class="search-result">
+		        	<div class="row">
+			        	<div class="col-md-5 col-xs-12 book-cover">
+			        		<img src="#{book.coverLink}" alt="book cover" width="180" height="180" class="img-thumbnail" />
+			        	</div>
+			        	<div class="book-infos col-md-7 book-infos">
+			        		<!-- display authors -->
+			        		<p><b>Authors: </b> ${book.authors}</p>
+			        		<!-- display subjects -->
+			        		<p><b>Subjects: </b> ${book.subjects}</p>
+			        		<!-- display languages -->
+			        		<p><b>Language: </b> ${book.languages}</p>
+			        		<!-- display link to read book -->
+			        		<p><a href="#{book.link}" target="_blank">Read this book</a></p>
+			        		<!-- link-button to show similar books -->
+			        		<p>
+				        		<p:commandLink value="Similar books" 
+				        									 update=":form:suggestions"
+				        									 oncomplete="PF('suggestions').show()" >
+		                    <f:setPropertyActionListener value="#{book}" target="#{engine.selectedBook}" />
+		                </p:commandLink>
+			        		</p>
+			        	</div>
+		        	</div>
+		        </p:panel>
+	    	</p:dataGrid>
+				<p:sidebar widgetVar="suggestions" 
+									 style="height:500px"
+									 position="bottom"
+									 baseZIndex="1000"
+									 id="suggestions">
+					<!-- suggestions close button -->
+	    		<div style="text-align:right" class="suggestionsHeader">
+	    			<p:commandLink oncomplete="PF('suggestions').hide()">
+	    				<i class="pi pi-times-circle" style="color: red; font-size:3em" />
+	    			</p:commandLink>
+	    		</div>
+	    		<!-- suggestions header -->
+	    		<p:carousel	value="${engine.getSuggestions()}"
+	    								id="suggestions_carousel"
+	    							  var="book"
+	    							  itemStyle="height: 400px; padding-top: 20px;"
+	    							  responsive="true">
+	    		<!-- Carousel header -->
+	    		<f:facet name="header">
+	    			<b>Suggestions for: </b> #{engine.selectedBook.title}
+	    		</f:facet>
+	    		<!-- Element content -->
+						<div class="row">
+							<div class="col-md-5 col-xs-12 book-cover">
+			        	<img src="#{book.coverLink}" alt="book cover" width="180" height="180" class="img-thumbnail" />
+			        </div>
+			        <div class="col-md-7 col-xs-12 book-infos">
+			        	<p><b>Title: </b> #{book.title}</p>
+			        	<p><b>Authors: </b> ${book.authors}</p>
+			        	<p><b>Subjects: </b> ${book.subjects}</p>
+			        	<p><b>Language: </b> ${book.languages}</p>
+			        	<p><a href="#{book.link}" target="_blank">Read this book</a></p>
+			        </div>
+						</div>
+    			</p:carousel>
+	    	</p:sidebar>
+			</h:form>
+   </h:body>
+</html>

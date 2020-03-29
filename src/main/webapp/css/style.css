@@ -1,0 +1,72 @@
+body {
+	background-image: url('../img/back.jpg');
+}
+
+.header {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.header h3 {
+	font-family: 'Georgia', 'Roboto', 'Garamond', 'sans-serif';
+	font-size: 56px;
+	color:white;
+	background: #000000b5;
+	padding: 10px;
+	border-radius:8px;
+	margin-bottom: 40px;
+}
+
+.header .ui-panel-content {
+	border: none !important;
+	background: transparent !important;
+}
+/* simple search panel */
+.ss-panel input {
+	padding-left: 15px;
+	width: 100%;
+}
+
+.ss-panel .btns {
+	text-align: center;
+	margin-top: 20px;
+}
+/* advanced search  panel */
+
+.as-panel {
+	margin-top: 50px;
+	border: none;
+}
+
+.as-element {
+	color:white;
+	font-weight: bold;
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.as-element input {
+	width: 100%;
+}
+
+.as-element label {
+	display: inline-block;
+	width: 150px;
+}
+
+.as-panel .btns {
+	text-align: center;
+}
+/* results page */
+.book-cover {
+	text-align: center;
+}
+
+.book-cover img {
+	width: 180px;
+	height: 280px;
+}
+
+.search-result .ui-panel-content {
+	min-height: 320px;
+}
